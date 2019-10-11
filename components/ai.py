@@ -18,7 +18,13 @@ class BasicMonster:
             elif target.fighter.hp > 0:
                 attack_results = monster.fighter.attack(target)
                 results.extend(attack_results)
+        else:
+            random_x = self.owner.x + randint(0, 2) - 1
+            random_y = self.owner.y + randint(0, 2) - 1
 
+            if random_x != self.owner.x and random_y != self.owner.y:
+                self.owner.move_towards(random_x, random_y, game_map, entities)
+                
         return results
 
 
@@ -43,3 +49,4 @@ class ConfusedMonster:
             results.append({'message': Message('The {0} is no longer confused!'.format(self.owner.name), libtcod.red)})
 
         return results
+        

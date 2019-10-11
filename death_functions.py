@@ -10,6 +10,8 @@ from render_functions import RenderOrder
 def kill_player(player):
     player.char = '%'
     player.color = libtcod.dark_red
+    player.name = 'Remains of ' + player.name
+    player.render_order = RenderOrder.CORPSE 
 
     return Message('You died!', libtcod.red), GameStates.PLAYER_DEAD
 
@@ -22,7 +24,7 @@ def kill_monster(monster):
     monster.blocks = False
     monster.fighter = None
     monster.ai = None
-    monster.name = 'remains of ' + monster.name
+    monster.name = 'Remains of ' + monster.name
     monster.render_order = RenderOrder.CORPSE
 
     return death_message

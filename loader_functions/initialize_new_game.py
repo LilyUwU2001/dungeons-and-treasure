@@ -20,18 +20,18 @@ from render_functions import RenderOrder
 
 
 def get_constants():
-    window_title = 'Roguelike Tutorial Revised'
+    window_title = 'Dungeons and Treasure'
 
     screen_width = 80
     screen_height = 50
 
-    bar_width = 20
+    bar_width = 16
     panel_height = 7
     panel_y = screen_height - panel_height
 
-    message_x = bar_width + 2
-    message_width = screen_width - bar_width - 2
-    message_height = panel_height - 1
+    message_x = 1
+    message_width = screen_width - 2
+    message_height = panel_height - 2
 
     map_width = 80
     map_height = 43

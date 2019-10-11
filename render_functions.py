@@ -73,7 +73,7 @@ def render_all(con, panel, entities, player, game_map, fov_map, fov_recompute, m
     libtcod.console_clear(panel)
 
     # Print the game messages, one line at a time
-    y = 1
+    y = 2
     for message in message_log.messages:
         libtcod.console_set_default_foreground(panel, message.color)
         libtcod.console_print_ex(panel, message_log.x, y, libtcod.BKGND_NONE, libtcod.LEFT, message.text)
@@ -81,8 +81,12 @@ def render_all(con, panel, entities, player, game_map, fov_map, fov_recompute, m
 
     render_bar(panel, 1, 1, bar_width, 'HP', player.fighter.hp, player.fighter.max_hp,
                libtcod.light_red, libtcod.darker_red)
-    libtcod.console_print_ex(panel, 1, 3, libtcod.BKGND_NONE, libtcod.LEFT,
-                             'Dungeon level: {0}'.format(game_map.dungeon_level))
+    libtcod.console_print_ex(panel, 21, 1, libtcod.BKGND_NONE, libtcod.LEFT,
+                             'Lv{0:02d}'.format(player.level.current_level))
+    render_bar(panel, 26, 1, bar_width, 'XP', player.level.current_xp, player.level.experience_to_next_level,
+               libtcod.light_blue, libtcod.darker_blue)
+    libtcod.console_print_ex(panel, 46, 1, libtcod.BKGND_NONE, libtcod.LEFT,
+                             'Floor {0:02d}'.format(game_map.dungeon_level))
 
     libtcod.console_set_default_foreground(panel, libtcod.light_gray)
     libtcod.console_print_ex(panel, 1, 0, libtcod.BKGND_NONE, libtcod.LEFT,

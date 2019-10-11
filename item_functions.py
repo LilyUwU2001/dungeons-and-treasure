@@ -97,7 +97,7 @@ def cast_confuse(*args, **kwargs):
 
             break
     else:
-        results.append({'consumed': False, 'message': Message('There is no targetable enemy at that location.', libtcod.yellow)})
+        results.append({'consumed': False, 'message': Message('There is no targetable entity at that location.', libtcod.yellow)})
 
     return results
 
@@ -128,6 +128,36 @@ def cast_teleport(*args, **kwargs):
 
             break
     else:
-        results.append({'consumed': False, 'message': Message('There is no targetable enemy at that location.', libtcod.yellow)})
+        results.append({'consumed': False, 'message': Message('There is no targetable entity at that location.', libtcod.yellow)})
+
+    return results
+
+def cast_polymorph(*args, **kwargs):
+    entities = kwargs.get('entities')
+    fov_map = kwargs.get('fov_map')
+    target_x = kwargs.get('target_x')
+    target_y = kwargs.get('target_y')
+
+    results = []
+
+    if not libtcod.map_is_in_fov(fov_map, target_x, target_y):
+        results.append({'consumed': False, 'message': Message('You cannot target a tile outside your field of view.', libtcod.yellow)})
+        return results
+
+    for entity in entities:
+        if entity.x == target_x and entity.y == target_y and entity.fighter:
+            results.append({'consumed': True, 'message': Message('The eyes of the {0} close, as he turns into a Sheep!'.format(entity.name), libtcod.light_green)})
+            
+            entity.name = 'Sheep'
+            entity.char = 's'
+            entity.color = libtcod.white
+            entity.fighter.base_power = 0;
+            entity.fighter.base_defense = 0;
+            entity.fighter.xp = 5;
+            entity.fighter.base_max_hp = 10;
+            entity.fighter.hp = 10;
+            break
+    else:
+        results.append({'consumed': False, 'message': Message('There is no targetable entity at that location.', libtcod.yellow)})
 
     return results

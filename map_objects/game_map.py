@@ -12,7 +12,7 @@ from entity import Entity
 
 from game_messages import Message
 
-from item_functions import cast_confuse, cast_fireball, cast_lightning, cast_teleport, heal
+from item_functions import cast_confuse, cast_fireball, cast_lightning, cast_teleport, cast_polymorph, heal
 
 from map_objects.rectangle import Rect
 from map_objects.tile import Tile
@@ -140,7 +140,8 @@ class GameMap:
             'lightning_scroll': 35,
             'fireball_scroll': 35,
             'teleport_scroll': 35,
-            'confusion_scroll': 35
+            'confusion_scroll': 35,
+            'polymorph_scroll': 35
         }
 
         for i in range(number_of_monsters):
@@ -199,6 +200,11 @@ class GameMap:
                     item_component = Item(use_function=cast_confuse, targeting=True, targeting_message=Message(
                         'Left-click an entity to cast the spell or right-click to cancel.', libtcod.light_cyan))
                     item = Entity(x, y, '#', libtcod.light_pink, 'Confusion Scroll', render_order=RenderOrder.ITEM,
+                                  item=item_component)
+                elif item_choice == 'polymorph_scroll':
+                    item_component = Item(use_function=cast_polymorph, targeting=True, targeting_message=Message(
+                        'Left-click an entity to cast the spell or right-click to cancel.', libtcod.light_cyan))
+                    item = Entity(x, y, '#', libtcod.blue, 'Polymorph Scroll', render_order=RenderOrder.ITEM,
                                   item=item_component)
                 else:
                     item_component = Item(use_function=cast_lightning, damage=40, maximum_range=5)
